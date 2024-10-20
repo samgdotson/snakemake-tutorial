@@ -1,0 +1,20 @@
+name: snakemake-tutorial
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python<3.12
+  - pip 
+
+  - ipython
+  - ipykernel
+  - jupyterlab
+  - snakemake-minimal>=8.14
+
+  - pandas
+  - scipy
+  - numpy
+  - matplotlib
+  - seaborn 
+  - unyt
+    
