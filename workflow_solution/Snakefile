@@ -1,0 +1,27 @@
+"""
+A Snakefile is just a python file! You can do things like:
+* import functions,
+* create variables,
+* perform calculations,
+* write comments.
+"""
+
+data_url = ("https://raw.githubusercontent.com/"
+            "samgdotson/2021-dotson-ms/refs/heads/"
+            "master/data/uiuc_demand_data.csv")
+
+data_path = "data"
+
+rule retrieve_data:
+    output: f"{data_path}/uiuc_demand_data.csv"
+    shell:
+        """
+        wget {data_url} -P {data_path}
+        """
+
+rule process_data:
+    input: 
+        data = f"{data_path}/uiuc_demand_data.csv"
+    output: 
+        processed_data = f"{data_path}/processed_data.csv"
+    script: "scripts/process_data.py" 

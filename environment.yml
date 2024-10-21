@@ -17,4 +17,10 @@ dependencies:
   - matplotlib
   - seaborn 
   - unyt
+  - geopandas
+
+  - pip:
+    - us
+    - census
+    - git+https://github.com/kmax12/gridstatus.git
     
