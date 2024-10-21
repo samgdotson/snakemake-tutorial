@@ -1,0 +1,9 @@
+"""
+A Snakefile is just a python file! You can do things like:
+* import functions,
+* create variables,
+* perform calculations,
+* write comments.
+
+URL: https://raw.githubusercontent.com/samgdotson/2021-dotson-ms/refs/heads/master/data/uiuc_demand_data.csv
+"""
