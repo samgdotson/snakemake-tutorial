@@ -105,6 +105,96 @@ rule retrieve_data:
         """
 ```
 
+**Run the step**
+
+To run this step, we simply execute the following
+
+```bash
+snakemake retrieve_data --cores=1  # or -j1 will also work
+```
+
 ### Step 2: Create a rule to process the data
 
 Now that we retrieved some data, we should do something with it.
+
+```py
+rule process_data:
+    input: 
+        data = f"{data_path}/uiuc_demand_data.csv"
+    output: 
+        processed_data = f"{data_path}/processed_data.csv"
+    script: "scripts/process_data.py" 
+```
+
+The `script` command should point to the directory _relative to the Snakefile_.
+
+
+### Step 3: Now create a rule to plot the data!
+
+This should be easy enough...
+
+```py
+rule plot_data:
+    input: 
+        data = f"{data_path}/uiuc_demand_data.csv",
+        processed_data = f"{data_path}/processed_data.csv"
+    output: 
+        plot = f"{figure_path}/my_plot.png"
+    script: "scripts/plot_data.py"
+```
+
+But, what if we wanted to have some universal parameters for one or all of our scripts? 
+We can achieve this with a `config.yml` file!
+
+**Adding a `config` file**
+
+At the top of your `Snakefile` write:
+
+```py
+configfile: path/to/config.yml
+```
+
+Now, you can use the parameters you create in the config file anywhere in your scripts using
+
+```py
+snakemake.config['my_parameter_key']
+```
+
+For the plotting script I added an option to change the background color of the plot with
+
+```yml
+plot_options:
+    facecolor: 'lightgray'
+```
+
+and called it using
+
+```py
+plot_options = snakemake.config['plot_options']
+fig, ax = plt.subplots(**plot_options)
+```
+
+### Step 4: Create a rule to run the entire workflow!
+
+This step is important because until now, we've had to run every rule individually.
+By adding a rule called `all` or `targets` at the _top_ of the `Snakefile`, we can
+execute the entire workflow with one command.
+
+
+### Step 5: (optional) Building the DAG
+
+The directed acyclic graph (DAG) shows the flow of data through your pipeline! This is an 
+optional step, but I like having it. 
+
+```py
+rule build_dag:
+    input: "Snakefile"
+    output:
+        "dag.png"
+    shell:
+        "snakemake --dag | dot -Tpng > {output}"
+```
+
+and it creates a lovely graph shown below!
+
+![workflow_solution/dag.png](workflow_solution/dag.png)

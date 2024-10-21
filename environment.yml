@@ -10,6 +10,7 @@ dependencies:
   - ipykernel
   - jupyterlab
   - snakemake-minimal>=8.14
+  - graphviz
 
   - pandas
   - scipy
@@ -18,6 +19,7 @@ dependencies:
   - seaborn 
   - unyt
   - geopandas
+  
 
   - pip:
     - us

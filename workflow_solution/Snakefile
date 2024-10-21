@@ -4,13 +4,22 @@ A Snakefile is just a python file! You can do things like:
 * create variables,
 * perform calculations,
 * write comments.
+
+URL: https://raw.githubusercontent.com/samgdotson/2021-dotson-ms/refs/heads/master/data/uiuc_demand_data.csv
 """
+configfile: "config.yml"
 
 data_url = ("https://raw.githubusercontent.com/"
             "samgdotson/2021-dotson-ms/refs/heads/"
             "master/data/uiuc_demand_data.csv")
 
 data_path = "data"
+figure_path = "figures"
+
+rule targets:
+    input:
+        plot = f"{figure_path}/my_plot.png",
+        dag = "dag.png"
 
 rule retrieve_data:
     output: f"{data_path}/uiuc_demand_data.csv"
@@ -25,3 +34,18 @@ rule process_data:
     output: 
         processed_data = f"{data_path}/processed_data.csv"
     script: "scripts/process_data.py" 
+
+rule plot_data:
+    input: 
+        data = f"{data_path}/uiuc_demand_data.csv",
+        processed_data = f"{data_path}/processed_data.csv"
+    output: 
+        plot = f"{figure_path}/my_plot.png"
+    script: "scripts/plot_data.py"
+
+rule build_dag:
+    input: "Snakefile"
+    output:
+        "dag.png"
+    shell:
+        "snakemake --dag | dot -Tpng > {output}"
