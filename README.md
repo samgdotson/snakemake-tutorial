@@ -180,6 +180,15 @@ This step is important because until now, we've had to run every rule individual
 By adding a rule called `all` or `targets` at the _top_ of the `Snakefile`, we can
 execute the entire workflow with one command.
 
+This rule only has an `input` since this checks that all of the steps (or at least the final step)
+has been executed.
+
+```py
+rule all:
+    input:
+        plot = f"{figure_path}/my_plot.png"
+```
+
 
 ### Step 5: (optional) Building the DAG
 

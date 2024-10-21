@@ -7,3 +7,24 @@ A Snakefile is just a python file! You can do things like:
 
 URL: https://raw.githubusercontent.com/samgdotson/2021-dotson-ms/refs/heads/master/data/uiuc_demand_data.csv
 """
+
+
+
+# Create a rule to retrieve some dataset?
+
+
+
+# Create a rule to process some dataset?
+
+
+
+# Create a rule to plot some processed dataset?
+
+
+
+# Create a rule to plot the workflow dag?
+
+
+
+# Create a rule to run the entire workflow? 
+# (remember this needs to be at the top of the file...)
